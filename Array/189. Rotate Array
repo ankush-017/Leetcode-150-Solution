@@ -1,0 +1,29 @@
+class Solution {
+
+    void reverseArray(int[] arr,int st,int n) {
+
+        int i = st, j = n-1;
+        while (i < j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+
+            i++;
+            j--;
+        }
+
+    }
+
+    public void rotate(int[] nums, int k) {
+        
+        // Approach 1. make a array that creates SC: O(n) TC: O(n)
+        // Approach 2. reverse array SC: O(1) TC: O(n)
+
+        int n = nums.length;
+        k %= n;
+        reverseArray(nums,0,n);
+        reverseArray(nums,0,k);
+        reverseArray(nums,k,n);
+
+    }
+}
