@@ -1,0 +1,33 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        
+        // TC: O(n)
+        // SC: O(n)
+        int n = nums.length;
+        int j = 0;
+        int same = 1;
+        for(int i=0;i<n-1;i++){
+            if(nums[i] == nums[i+1]){
+                same++;
+            }
+            else if(same>=2 && nums[i] != nums[i+1]){
+                nums[j++] = nums[i];
+                nums[j++] = nums[i];
+                same = 1;
+            }
+            else{
+                nums[j++] = nums[i];
+                same = 1;
+            }
+        }
+        if(same>=2){
+            nums[j++] = nums[n-1];
+            nums[j++] = nums[n-1];
+        }
+        else{
+            nums[j++] = nums[n-1];
+        }
+
+        return j;
+    }
+}
