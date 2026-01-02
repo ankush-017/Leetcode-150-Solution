@@ -1,0 +1,21 @@
+class Solution {
+    public int hIndex(int[] citations) {
+        
+        // Approach 1: using make frequency that creates => SC: O(n) => TC: O(n)
+        // Approach 2: usng sorting => SC: O(1) => TC:O(nlogn) best approach 
+
+        int n = citations.length;
+        int h = 0;
+
+        Arrays.sort(citations);
+        for (int i = 0; i < n; i++) {
+            int dist = n - i;
+            if (citations[i] >= dist) {
+                h = Math.max(h, dist);
+            }
+        }
+
+        return h;
+
+    }
+}
