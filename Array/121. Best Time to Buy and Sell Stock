@@ -1,0 +1,19 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        
+        // Approach 1: by using stack => SC: O(n) TC: O(n)
+        // Approach 2: by using traverse from last and took maximum => SC: O(1) TC: O(n) ***
+
+        int n = prices.length;
+        int ans = 0;
+        int maxi = prices[n-1];
+
+        for(int i=n-2;i>=0;i--){
+            int diff = maxi - prices[i];
+            ans = Math.max(diff,ans);
+            maxi = Math.max(maxi,prices[i]);
+        }
+
+        return ans;
+    }
+}
