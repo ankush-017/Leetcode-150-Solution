@@ -1,0 +1,21 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        
+        // Approach 1: greedly solve => TC: O(n) => SC: O(1)
+        // Approach 2: Using 1-D dp => TC: O(n^2) => SC: O(n) due to stack created
+
+        int n = nums.length;
+        int maxi = 0;
+        if(n == 1) return true;
+
+        for(int i=0;i<n;i++){
+            int dist = nums[i];
+            if(i<n-1 && nums[i] == 0 && ((i+dist) == maxi)){
+                return false;
+            }
+            maxi = Math.max(i+dist,maxi);
+        }
+
+        return true;
+    }
+}
