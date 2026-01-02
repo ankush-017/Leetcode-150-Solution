@@ -1,0 +1,39 @@
+class Solution {
+
+    int[][] dp;
+    int n;
+
+    int solve(int[] prices,int idx,int buy){
+
+        if(idx >= n) return 0;
+        if(dp[idx][buy] != -1) return dp[idx][buy];
+        int profit = 0;
+        if(buy == 0){
+            int take = -prices[idx] + solve(prices,idx+1,1);
+            int skip = solve(prices,idx+1,0);
+            profit = Math.max(take,skip);
+        }
+        else{
+            int take = prices[idx] + solve(prices,idx+1,0);
+            int skip = solve(prices,idx+1,1);
+            profit = Math.max(take,skip);
+        }
+
+        return dp[idx][buy] = profit;
+    }
+
+    public int maxProfit(int[] prices){
+        
+        // best Approach is using DP => decide first no. of state
+        // state 1: traverse all index
+        // state 2: buy/sell (2) => if(1) means buy noe you can sell => if(0) means you can buy now
+
+        n = prices.length;
+        dp = new int[n+1][2];
+        for(int i=0;i<=n;i++){
+            Arrays.fill(dp[i],-1);
+        }
+
+        return solve(prices,0,0);
+    }
+}
