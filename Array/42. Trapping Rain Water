@@ -1,0 +1,23 @@
+class Solution {
+    public int trap(int[] height) {
+        
+        int n = height.length;
+        int[] rightMaxi = new int[n];
+        rightMaxi[n-1] = height[n-1];
+        for(int i=n-2;i>=0;i--){
+            rightMaxi[i] = Math.max(height[i],rightMaxi[i+1]);
+        }
+        int ans = 0;
+        int lmaxi = height[0];
+        for(int i=1;i<n-1;i++){
+            int curr = height[i];
+            int miniH = Math.min(lmaxi,rightMaxi[i+1]);
+            if(curr < miniH){
+                ans += (miniH - curr);
+            }
+            lmaxi = Math.max(lmaxi,height[i]);
+        }
+
+        return ans;
+    }
+}
