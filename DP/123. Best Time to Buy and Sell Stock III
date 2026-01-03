@@ -1,0 +1,41 @@
+class Solution {
+
+    int n;
+    int[][][] dp;
+
+    int solve(int[] prices,int idx,int buy,int trans){
+
+        if(idx>=n || trans > 1) return 0;
+        if(dp[idx][buy][trans] != -1) return dp[idx][buy][trans];
+
+        int profit = 0;
+        if(buy == 0){ // ready to buy
+            // now two possibility => buy or skip
+            int took = -prices[idx] + solve(prices,idx+1,1,trans);
+            int skip = solve(prices,idx+1,0,trans);
+            profit = Math.max(took,skip);
+        }
+        else{ // ready to sell
+            // now two possibility => sell or skip
+            int sell = prices[idx] + solve(prices,idx+1,0,trans+1); // transaction completed
+            int skip = solve(prices,idx+1,1,trans);
+            profit = Math.max(sell,skip);
+        }
+
+        return dp[idx][buy][trans] = profit;
+    }
+
+    public int maxProfit(int[] prices) {
+        
+        n = prices.length;
+        dp = new int[n+1][2][3]; // index,buy/sell,transactions
+
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<2;j++){
+                Arrays.fill(dp[i][j],-1);
+            }
+        }
+
+        return solve(prices,0,0,0);
+    }
+}
