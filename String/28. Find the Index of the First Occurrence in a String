@@ -1,0 +1,59 @@
+class Solution {
+
+    int[] lps;
+    int n;
+
+    void buildLps(String s){
+
+        int i=0,j=1;
+        while(j<n){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                lps[j] = i;
+                j++;
+            }
+            else{
+                if(i>0){
+                    i = lps[i-1];
+                }
+                else{
+                    lps[j] = 0;
+                    j++;
+                }
+            }
+        }
+
+    }
+
+    public int strStr(String haystack, String needle) {
+        
+        // Approach 1: naive approach => run two loop that cause => TC: O(n*m) => SC: O(1)
+        // Approach 2: KMP Approach => TC: O(n+m) => SC: O(1) => optimized Approach
+
+        // make the first lps(longest prefix suffix)
+        n = needle.length();
+        lps = new int[n];
+        buildLps(needle);
+
+        // now we match the string
+        int i = 0, j = 0;
+        
+        while(i<haystack.length()){
+            if(haystack.charAt(i) == needle.charAt(j)){
+                j++;
+                i++;
+                if(j == n) return i-j;
+            }
+            else{
+                if(j > 0){
+                    j = lps[j-1];
+                }
+                else{
+                    i++;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
