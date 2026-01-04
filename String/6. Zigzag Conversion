@@ -1,0 +1,41 @@
+class Solution {
+    public String convert(String s, int numRows) {
+
+        // TC: O(N) => SC: O(N)
+        if (numRows == 1) return s;
+        int n = s.length();
+        StringBuilder[] ans = new StringBuilder[numRows];
+
+        for (int i = 0; i < numRows; i++) {
+            ans[i] = new StringBuilder();
+        }
+
+        boolean down = true;
+        int idx = 0, r = 0;
+
+        while (idx < n) {
+            if (down) {
+                r = 0;
+                while (r < numRows && idx < n) {
+                    ans[r].append(s.charAt(idx++));
+                    r++;
+                }
+            } 
+            else {
+                r = numRows - 2;
+                while (r > 0 && idx < n) {
+                    ans[r].append(s.charAt(idx++));
+                    r--;
+                }
+            }
+            down = !down;
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < numRows; i++) {
+            res.append(ans[i]);
+        }
+
+        return res.toString();
+    }
+}
