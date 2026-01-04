@@ -1,0 +1,39 @@
+class Solution {
+    public String reverseWords(String s) {
+
+        // TC: O(n) => SC: O(n)
+
+        StringBuilder ans = new StringBuilder();
+        int st = 0, end = s.length() - 1;
+        // remove leading spaces
+        while (st < s.length() && s.charAt(st) == ' ') {
+            st++;
+        }
+        // remove trailing spaces
+        while (end >= 0 && s.charAt(end) == ' ') {
+            end--;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = end; i >= st; i--) {
+            if (s.charAt(i) != ' ') {
+                sb.append(s.charAt(i));
+            } 
+            else {
+                if (sb.length() > 0) {
+                    if (ans.length() > 0) ans.append(' ');
+                    ans.append(sb.reverse());
+                    sb.setLength(0);
+                }
+            }
+        }
+        // add last word
+        if (sb.length() > 0) {
+            if (ans.length() > 0) ans.append(' ');
+            ans.append(sb.reverse());
+        }
+
+        return ans.toString();
+    }
+}
