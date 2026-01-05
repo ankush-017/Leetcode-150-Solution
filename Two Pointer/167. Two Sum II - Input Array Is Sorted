@@ -1,0 +1,45 @@
+class Solution {
+
+    int binarySearch(int val,int[] num){
+
+        int st = 0;
+        int end = num.length-1;
+        int idx = num.length;
+
+        while(st<=end){
+            int mid = st + (end - st)/2;
+            if(num[mid] == val){
+                idx = mid;
+                break;
+            }
+            else if(num[mid] > val){
+                end = mid - 1;
+            }
+            else{
+                st = mid + 1;
+            }
+        }
+
+        return (idx == num.length) ? -1 : idx;
+    }
+
+    public int[] twoSum(int[] num, int target) {
+        
+        // Approach 1: use the map => TC:O(n) => SC: O(n)
+        // Approach 2: using binary Search => TC:O(nlogn) => SC: O(1)
+
+        int n = num.length;
+        for(int i=0;i<n;i++){
+            int f = num[i];
+            int valR = target - f;
+            int idx = binarySearch(valR,num);
+            if(idx != -1 && idx != i){
+                int mini = Math.min(i+1,idx+1);
+                int maxi = Math.max(i+1,idx+1);
+                return new int[]{mini,maxi};
+            }
+        }
+
+        return new int[]{};
+    }
+}
