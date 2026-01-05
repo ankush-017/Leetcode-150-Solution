@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+
+        // Approach: do using two pointer => TC: O(m) => SC: O(1)
+
+        // Follow Up Question:
+        // O(k*m) creates problem, not scalable => 
+        // we use Map => in this store the character of index
+        // and then traverse in s string => search index by binarysearch
+        // TC: O(t + k*slogt) => SC: O(t); 
+        int i=0,j=0;
+        int n = s.length(),m = t.length();
+        while(i<n && j<m){
+            if(s.charAt(i) == t.charAt(j)){
+                i++;
+                j++;
+                if(i == n) return true;
+            }
+            else{
+                j++;
+            }
+        }
+        if(i == n) return true;
+
+        return false;
+    }
+}
