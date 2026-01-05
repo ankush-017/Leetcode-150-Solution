@@ -1,0 +1,23 @@
+class Solution {
+    public int maxArea(int[] arr) {
+        
+        // this is done with two pointer
+        int i=0,j=arr.length-1;
+        int maxi = Integer.MIN_VALUE;
+
+        while(i<j){
+            if(arr[i] <= arr[j]){
+                int cal = (j-i)*arr[i];
+                maxi = Math.max(maxi,cal);
+                i++;
+            }
+            else{
+                int cal = (j-i) * arr[j];
+                maxi = Math.max(maxi,cal);
+                j--;
+            }
+        }
+        
+        return maxi;
+    }
+}
