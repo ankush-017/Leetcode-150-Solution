@@ -1,0 +1,53 @@
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+
+        // TC: O(n) => SC: O(k*l)
+        List<Integer> li = new ArrayList<>();
+
+        int wordCount = words.length;
+        int wordLen = words[0].length();
+        int n = s.length();
+
+        HashMap<String, Integer> mp = new HashMap<>();
+        for (String w : words) {
+            mp.put(w, mp.getOrDefault(w, 0) + 1);
+        }
+
+        for (int i = 0; i < wordLen; i++) {
+
+            HashMap<String, Integer> mpp = new HashMap<>();
+            int cnt = 0;
+            int left = i;
+
+            for (int j = i; j + wordLen <= n; j += wordLen) {
+
+                String w = s.substring(j, j + wordLen);
+
+                if (mp.containsKey(w)) {
+
+                    mpp.put(w, mpp.getOrDefault(w, 0) + 1);
+                    cnt++;
+
+                    while (mpp.get(w) > mp.get(w)) {
+                        String lw = s.substring(left, left + wordLen);
+                        mpp.put(lw, mpp.get(lw) - 1);
+                        left += wordLen;
+                        cnt--;
+                    }
+
+                    if (cnt == wordCount) {
+                        li.add(left);
+                    }
+
+                } 
+                else {
+                    mpp.clear();     
+                    cnt = 0;
+                    left = j + wordLen;
+                }
+            }
+        }
+
+        return li;
+    }
+}
