@@ -1,1 +1,67 @@
+class Solution {
 
+    public boolean isValidSudoku(char[][] board) {
+
+        // Check each row
+        for (int i = 0; i < 9; i++) {
+            HashMap<Character, Integer> map = new HashMap<>();
+
+            for (int j = 0; j < 9; j++) {
+                char ch = board[i][j];
+
+                if (ch != '.') { // Ignore empty cells
+                    map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+                    // If number appears more than once → invalid
+                    if (map.get(ch) > 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Check each column
+        for (int i = 0; i < 9; i++) {
+            HashMap<Character, Integer> map = new HashMap<>();
+
+            for (int j = 0; j < 9; j++) {
+                char ch = board[j][i];
+
+                if (ch != '.') {
+                    map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+                    if (map.get(ch) > 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Check each 3x3 sub-box
+        for (int row = 0; row < 9; row += 3) {
+            for (int col = 0; col < 9; col += 3) {
+
+                HashMap<Character, Integer> map = new HashMap<>();
+
+                // Traverse inside 3x3 box
+                for (int r = 0; r < 3; r++) {
+                    for (int c = 0; c < 3; c++) {
+
+                        char ch = board[row + r][col + c];
+
+                        if (ch != '.') {
+                            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+                            if (map.get(ch) > 1) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // if no duplicates found
+        return true;
+    }
+}
